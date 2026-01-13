@@ -33,3 +33,13 @@ io.on("connection", (socket) => {
 server.listen(5000, () => {
   console.log("Server running on port 5000");
 });
+
+const CHAT_PASSWORD = "vibecoding"; // you decide
+
+io.use((socket, next) => {
+  if (socket.handshake.auth.password === CHAT_PASSWORD) {
+    next();
+  } else {
+    next(new Error("Unauthorized"));
+  }
+});
