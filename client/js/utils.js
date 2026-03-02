@@ -1,51 +1,49 @@
-/* utils.js — Pure helper functions */
+/* utils.js — Pure helpers */
 'use strict';
 
 const QUICK_REACTIONS = ['👍','❤️','😂','😮','😢','🔥'];
-
 const EMOJIS = [
-  '😀','😂','🥹','😍','🤩','😎','🥳','🤔','😤','🥺',
-  '❤️','🔥','👏','🎉','✅','💯','🚀','⭐','💡','🎯',
-  '😅','🤣','😇','🤗','😈','💀','👻','🤖','👾','🎃',
-  '🐶','🐱','🦊','🐻','🦁','🐼','🦄','🐸','🐙','🦋',
-  '🍕','🍔','🌮','🍜','🍣','🍦','☕','🧃','🎂','🎵',
+  '😀','😂','🥹','😍','🤩','😎','🥳','🤔','😤','🥺','❤️','🔥','👏','🎉','✅','💯','🚀','⭐','💡','🎯',
+  '😅','🤣','😇','🤗','😈','💀','👻','🤖','👾','🎃','🐶','🐱','🦊','🐻','🦁','🐼','🦄','🐸','🐙','🦋',
+  '🍕','🍔','🌮','🍜','🍣','🍦','☕','🧃','🎂','🎵','🌍','✈️','🏖️','🏔️','🎮','📱','💻','📚','🎨','🧪',
 ];
 
-/** Escape HTML to prevent XSS */
 function escHtml(s) {
-  return String(s)
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#39;')
-    .replace(/\n/g, '<br>');
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;').replace(/\n/g,'<br>');
 }
 
-/** Format an ISO timestamp to HH:MM */
 function fmtTime(iso) {
-  return new Date(iso).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  return new Date(iso).toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
 }
 
-/** True if two consecutive user messages should be grouped (same author, < 60s apart) */
+function fmtDate(iso) {
+  const d = new Date(iso);
+  const now = new Date();
+  const diff = now - d;
+  if (diff < 60000)     return 'now';
+  if (diff < 3600000)   return `${Math.floor(diff/60000)}m`;
+  if (diff < 86400000)  return fmtTime(iso);
+  if (diff < 604800000) return d.toLocaleDateString([],{weekday:'short'});
+  return d.toLocaleDateString([],{month:'short',day:'numeric'});
+}
+
 function isConsecutive(msg, prev) {
   if (!prev || msg.type !== 'user' || prev.type !== 'user') return false;
-  if (msg.author?.id !== prev.author?.id) return false;
-  return (new Date(msg.timestamp) - new Date(prev.timestamp)) < 60_000;
+  const sameAuthor = msg.author?.id === prev.author?.id || msg.from?.username === prev.from?.username;
+  if (!sameAuthor) return false;
+  return (new Date(msg.timestamp) - new Date(prev.timestamp)) < 60000;
 }
 
-/** Show/hide the spinner on an auth button */
 function setLoading(btnId, loading) {
   const btn = document.getElementById(btnId);
   if (!btn) return;
   btn.disabled = loading;
-  const spinner = btn.querySelector('.btn-spinner');
-  const label   = btn.querySelector('span');
-  if (spinner) spinner.classList.toggle('hidden', !loading);
-  if (label)   label.style.opacity = loading ? '0.5' : '1';
+  const sp = btn.querySelector('.btn-spinner');
+  const lb = btn.querySelector('span');
+  if (sp) sp.classList.toggle('hidden', !loading);
+  if (lb) lb.style.opacity = loading ? '0.5' : '1';
 }
 
-/** Show an auth error message */
 function showAuthError(id, msg) {
   const el = document.getElementById(id);
   if (!el) return;
@@ -53,7 +51,6 @@ function showAuthError(id, msg) {
   el.classList.remove('hidden');
 }
 
-/** Toast notification */
 let _toastTimer;
 function showToast(msg, type = 'info') {
   const el = document.getElementById('toast');

@@ -1,21 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="icon" type="image/png" href="pic/logo.png">
-  <title>ChatApp — Secure Messenger</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="css/base.css" />
-  <link rel="stylesheet" href="css/auth.css" />
-  <link rel="stylesheet" href="css/chat.css" />
-  <link rel="stylesheet" href="css/components.css" />
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>ChatApp</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="css/base.css"/>
+  <link rel="stylesheet" href="css/auth.css"/>
+  <link rel="stylesheet" href="css/chat.css"/>
+  <link rel="stylesheet" href="css/components.css"/>
 </head>
 <body>
 
-<!-- ══ AUTH SCREEN ══════════════════════════════════════════ -->
+<!-- ══ AUTH ════════════════════════════════════════════════════ -->
 <div id="auth-screen" class="auth-screen">
   <div class="auth-card">
     <div class="auth-logo">
@@ -23,17 +22,15 @@
         <svg viewBox="0 0 44 44" fill="none">
           <circle cx="22" cy="22" r="20" stroke="url(#lg)" stroke-width="2.5"/>
           <path d="M13 16h18M13 22h11M13 28h14" stroke="url(#lg)" stroke-width="2.5" stroke-linecap="round"/>
-          <circle cx="33" cy="11" r="5" fill="#10B981"/>
-          <defs>
-            <linearGradient id="lg" x1="0" y1="0" x2="44" y2="44" gradientUnits="userSpaceOnUse">
-              <stop stop-color="#3B82F6"/><stop offset="1" stop-color="#8B5CF6"/>
-            </linearGradient>
-          </defs>
+          <circle cx="33" cy="11" r="5" fill="#22c55e"/>
+          <defs><linearGradient id="lg" x1="0" y1="0" x2="44" y2="44" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#3a6ef7"/><stop offset="1" stop-color="#7c3aed"/>
+          </linearGradient></defs>
         </svg>
       </div>
       <div>
         <div class="logo-name">Signal<span>Chat</span></div>
-        <div class="logo-tagline">Encrypted · Private · Real-time</div>
+        <div class="logo-tagline">Say hello. Stay private.</div>
       </div>
     </div>
 
@@ -46,12 +43,12 @@
     <div id="login-form" class="auth-form">
       <div class="field">
         <label>Username</label>
-        <input type="text" id="login-username" placeholder="your_username" autocomplete="username" maxlength="24" spellcheck="false" />
+        <input type="text" id="login-username" placeholder="your_username" autocomplete="username" maxlength="24" spellcheck="false"/>
       </div>
       <div class="field">
         <label>Password</label>
         <div class="pw-wrap">
-          <input type="password" id="login-password" placeholder="••••••••" autocomplete="current-password" />
+          <input type="password" id="login-password" placeholder="••••••••" autocomplete="current-password"/>
           <button class="pw-toggle" data-target="login-password" tabindex="-1" type="button">
             <svg class="eye-open" viewBox="0 0 20 20" fill="currentColor"><path d="M10 12a2 2 0 100-4 2 2 0 000 4z"/><path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd"/></svg>
             <svg class="eye-closed hidden" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M3.28 2.22a.75.75 0 00-1.06 1.06l14.5 14.5a.75.75 0 101.06-1.06l-1.745-1.745a10.029 10.029 0 003.3-4.38 1.651 1.651 0 000-1.185A10.004 10.004 0 009.999 3a9.956 9.956 0 00-4.744 1.194L3.28 2.22zM7.752 6.69l1.092 1.092a2.5 2.5 0 013.374 3.373l1.091 1.092a4 4 0 00-5.557-5.557z" clip-rule="evenodd"/><path d="M10.748 13.93l2.523 2.523a10.034 10.034 0 01-3.27.547c-4.258 0-7.894-2.66-9.337-6.41a1.651 1.651 0 010-1.186A10.007 10.007 0 012.839 6.02L6.07 9.252a4 4 0 004.678 4.678z"/></svg>
@@ -66,12 +63,12 @@
     <div id="register-form" class="auth-form hidden">
       <div class="field">
         <label>Username <span class="field-hint">2–24 chars, letters/numbers/_</span></label>
-        <input type="text" id="reg-username" placeholder="your_username" autocomplete="username" maxlength="24" spellcheck="false" />
+        <input type="text" id="reg-username" placeholder="your_username" autocomplete="username" maxlength="24" spellcheck="false"/>
       </div>
       <div class="field">
-        <label>Password <span class="field-hint">Min 8 · upper + lower + number</span></label>
+        <label>Password <span class="field-hint">Min 8 chars · upper + lower + number</span></label>
         <div class="pw-wrap">
-          <input type="password" id="reg-password" placeholder="Choose a strong password" autocomplete="new-password" />
+          <input type="password" id="reg-password" placeholder="Choose a strong password" autocomplete="new-password"/>
           <button class="pw-toggle" data-target="reg-password" tabindex="-1" type="button">
             <svg class="eye-open" viewBox="0 0 20 20" fill="currentColor"><path d="M10 12a2 2 0 100-4 2 2 0 000 4z"/><path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd"/></svg>
             <svg class="eye-closed hidden" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M3.28 2.22a.75.75 0 00-1.06 1.06l14.5 14.5a.75.75 0 101.06-1.06l-1.745-1.745a10.029 10.029 0 003.3-4.38 1.651 1.651 0 000-1.185A10.004 10.004 0 009.999 3a9.956 9.956 0 00-4.744 1.194L3.28 2.22zM7.752 6.69l1.092 1.092a2.5 2.5 0 013.374 3.373l1.091 1.092a4 4 0 00-5.557-5.557z" clip-rule="evenodd"/><path d="M10.748 13.93l2.523 2.523a10.034 10.034 0 01-3.27.547c-4.258 0-7.894-2.66-9.337-6.41a1.651 1.651 0 010-1.186A10.007 10.007 0 012.839 6.02L6.07 9.252a4 4 0 004.678 4.678z"/></svg>
@@ -83,137 +80,189 @@
       <div class="field">
         <label>Confirm Password</label>
         <div class="pw-wrap">
-          <input type="password" id="reg-confirm" placeholder="Repeat password" autocomplete="new-password" />
+          <input type="password" id="reg-confirm" placeholder="Repeat password" autocomplete="new-password"/>
         </div>
         <div id="pw-match" class="pw-match hidden"></div>
       </div>
       <div id="reg-error" class="auth-error hidden"></div>
       <button id="register-btn" class="btn-primary" type="button" disabled><span>Create Account</span><div class="btn-spinner hidden"></div></button>
     </div>
-
-    <div class="auth-footer">🔒 Passwords hashed with bcrypt · JWT sessions</div>
+    <div class="auth-footer">🔒 End-to-end inspired · bcrypt · JWT</div>
   </div>
 </div>
 
-<!-- ══ MAIN APP ══════════════════════════════════════════════ -->
+<!-- ══ APP ══════════════════════════════════════════════════════ -->
 <div id="app" class="app hidden">
 
-  <aside class="sidebar">
-    <div class="sidebar-header">
-      <div class="sidebar-logo">
-        <svg class="logo-icon-sm" viewBox="0 0 24 24" fill="none">
-          <circle cx="12" cy="12" r="10.5" stroke="url(#g2)" stroke-width="1.5"/>
-          <path d="M7 9h10M7 12h6M7 15h8" stroke="url(#g2)" stroke-width="1.5" stroke-linecap="round"/>
-          <defs><linearGradient id="g2" x1="0" y1="0" x2="24" y2="24" gradientUnits="userSpaceOnUse"><stop stop-color="#3B82F6"/><stop offset="1" stop-color="#8B5CF6"/></linearGradient></defs>
-        </svg>
-        <span class="sidebar-app-name">ChatApp</span>
+  <!-- COL 1: Icon nav (Signal-style left strip) -->
+  <nav class="icon-nav">
+    <!-- My avatar -->
+    <div class="nav-avatar" id="my-avatar" title="Profile"></div>
+    <div class="nav-sep"></div>
+
+    <!-- Chats tab -->
+    <button class="nav-btn active" data-tab="chats" title="Chats" onclick="setNavActive('chats')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+      </svg>
+      <span class="nav-badge hidden" id="dm-nav-badge"></span>
+    </button>
+
+    <div class="nav-spacer"></div>
+
+    <!-- Theme toggle -->
+    <button class="nav-btn theme-btn" id="theme-toggle" title="Toggle theme">
+      <span id="theme-icon" style="font-size:18px">☀️</span>
+    </button>
+
+    <!-- Logout -->
+    <button class="nav-btn" id="logout-btn" title="Sign out">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+        <polyline points="16 17 21 12 16 7"/>
+        <line x1="21" y1="12" x2="9" y2="12"/>
+      </svg>
+    </button>
+  </nav>
+
+  <!-- COL 2: Conversation list -->
+  <aside class="convo-panel">
+    <div class="convo-header">
+      <span class="convo-title">Chats</span>
+      <div class="convo-actions">
+        <button class="icon-btn" title="New DM" onclick="showToast('Start a DM by clicking a member in a room','info')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+          </svg>
+        </button>
       </div>
-      <button class="icon-btn" id="logout-btn" title="Sign out">
-        <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M3 4.25A2.25 2.25 0 015.25 2h5.5A2.25 2.25 0 0113 4.25v2a.75.75 0 01-1.5 0v-2a.75.75 0 00-.75-.75h-5.5a.75.75 0 00-.75.75v11.5c0 .414.336.75.75.75h5.5a.75.75 0 00.75-.75v-2a.75.75 0 011.5 0v2A2.25 2.25 0 0110.75 18h-5.5A2.25 2.25 0 013 15.75V4.25z" clip-rule="evenodd"/><path fill-rule="evenodd" d="M19 10a.75.75 0 00-.75-.75H8.704l1.048-1.08a.75.75 0 10-1.004-1.115l-2.5 2.57a.75.75 0 000 1.046l2.5 2.57a.75.75 0 101.004-1.115l-1.048-1.08h9.546A.75.75 0 0019 10z" clip-rule="evenodd"/></svg>
-      </button>
     </div>
-
-    <div class="user-strip">
-      <div class="user-avatar-sm" id="my-avatar"></div>
-      <div class="user-info">
-        <span class="user-name" id="my-username"></span>
-        <span class="user-status online">● Online</span>
+    <div class="search-wrap">
+      <div class="search-bar">
+        <svg class="search-icon" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" clip-rule="evenodd"/></svg>
+        <input type="text" id="search-input" placeholder="Search…"/>
       </div>
     </div>
-
-    <div class="search-bar">
-      <svg class="search-icon" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" clip-rule="evenodd"/></svg>
-      <input type="text" id="search-input" placeholder="Search rooms…" />
-    </div>
-
-    <div class="section-label">ROOMS</div>
-    <div class="rooms-list" id="rooms-list"></div>
-
-    <div class="section-label members-label">IN THIS ROOM</div>
-    <div class="members-list" id="members-list"></div>
+    <div class="convo-list" id="convo-list"></div>
   </aside>
 
+  <!-- COL 3: Chat area -->
   <main class="chat-main">
+    <!-- Header -->
     <header class="chat-header">
-      <div class="chat-header-info">
-        <span class="chat-room-icon" id="header-icon">💬</span>
+      <div class="chat-header-left">
+        <div class="chat-header-avatar" id="chat-header-avatar" style="background:var(--accent)">💬</div>
         <div>
-          <div class="chat-room-name" id="header-name">General</div>
-          <div class="chat-room-desc" id="header-desc">Open conversation for everyone</div>
+          <div class="chat-header-name" id="chat-header-name">ChatApp</div>
+          <div class="chat-header-sub"  id="chat-header-sub">Choose a conversation</div>
         </div>
       </div>
-      <div class="chat-header-actions">
-        <span class="member-count-badge">
-          <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 8a3 3 0 100-6 3 3 0 000 6zM12.735 14c.618 0 1.093-.561.872-1.139a6.002 6.002 0 00-11.215 0c-.22.578.254 1.139.872 1.139h9.47z"/></svg>
-          <span id="header-count-num">0</span>
-        </span>
-        <div class="lock-badge" title="Secured">
-          <svg viewBox="0 0 16 16" fill="currentColor"><path fill-rule="evenodd" d="M8 1a3.5 3.5 0 00-3.5 3.5V7A1.5 1.5 0 003 8.5v5A1.5 1.5 0 004.5 15h7a1.5 1.5 0 001.5-1.5v-5A1.5 1.5 0 0011.5 7V4.5A3.5 3.5 0 008 1zm2 6V4.5a2 2 0 10-4 0V7h4z" clip-rule="evenodd"/></svg>
+      <div class="chat-header-right">
+        <button class="icon-btn" id="members-toggle" title="Members">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+            <circle cx="9" cy="7" r="4"/>
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
+          </svg>
+        </button>
+        <div class="lock-badge" title="Secured" style="display:flex;align-items:center;padding:6px 8px;background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.25);border-radius:99px;color:var(--green);">
+          <svg viewBox="0 0 16 16" fill="currentColor" style="width:12px;height:12px"><path fill-rule="evenodd" d="M8 1a3.5 3.5 0 00-3.5 3.5V7A1.5 1.5 0 003 8.5v5A1.5 1.5 0 004.5 15h7a1.5 1.5 0 001.5-1.5v-5A1.5 1.5 0 0011.5 7V4.5A3.5 3.5 0 008 1zm2 6V4.5a2 2 0 10-4 0V7h4z" clip-rule="evenodd"/></svg>
         </div>
       </div>
     </header>
 
+    <!-- Messages -->
     <div class="messages-area" id="messages-area">
-      <div class="messages-start">
-        <div class="start-icon" id="start-icon">💬</div>
-        <p>Welcome to <strong id="start-room-name">General</strong></p>
-        <p class="start-sub">This is the beginning of the conversation</p>
+      <div class="lobby">
+        <div class="lobby-icon">💬</div>
+        <h2>Welcome to ChatApp</h2>
+        <p>Select a room or direct message to start chatting.</p>
       </div>
     </div>
 
+    <!-- Typing -->
     <div class="typing-bar" id="typing-bar">
       <div class="typing-dots"><span></span><span></span><span></span></div>
       <span id="typing-text"></span>
     </div>
 
+    <!-- Input -->
     <div class="input-area">
       <div class="input-wrapper">
         <button class="icon-btn emoji-btn" id="emoji-btn" type="button" title="Emoji">
-          <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM7 9a1 1 0 100-2 1 1 0 000 2zm7-1a1 1 0 11-2 0 1 1 0 012 0zm-7.536 5.879a1 1 0 001.415 0 3 3 0 014.242 0 1 1 0 001.415-1.415 5 5 0 00-7.072 0 1 1 0 000 1.415z" clip-rule="evenodd"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/><path d="M8 13s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/>
+          </svg>
         </button>
-        <textarea id="message-input" placeholder="Message #general" rows="1" maxlength="2000"></textarea>
-        <button class="send-btn" id="send-btn" type="button">
-          <svg viewBox="0 0 20 20" fill="currentColor"><path d="M3.105 2.289a.75.75 0 00-.826.95l1.414 4.925A1.5 1.5 0 005.135 9.25h6.115a.75.75 0 010 1.5H5.135a1.5 1.5 0 00-1.442 1.086l-1.414 4.926a.75.75 0 00.826.95 28.896 28.896 0 0015.293-7.154.75.75 0 000-1.115A28.897 28.897 0 003.105 2.289z"/></svg>
+        <textarea id="message-input" placeholder="Select a conversation…" rows="1" maxlength="2000" disabled></textarea>
+        <button class="send-btn" id="send-btn" type="button" disabled>
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
         </button>
       </div>
       <div class="input-footer">
-        <span id="char-count" class="char-count">0 / 2000</span>
-        <span class="input-tip">Enter to send · Shift+Enter for new line</span>
+        <span id="char-count" class="char-count">0/2000</span>
+        <span class="input-tip">Enter to send · Shift+Enter for newline</span>
       </div>
     </div>
 
     <div class="emoji-picker hidden" id="emoji-picker">
       <div class="emoji-grid" id="emoji-grid"></div>
     </div>
+
+    <!-- Members panel (slides in on toggle) -->
+    <div class="members-panel hidden" id="members-panel">
+      <div class="members-panel-header">
+        <span>Members</span>
+        <button class="icon-btn" onclick="document.getElementById('members-panel').classList.add('hidden');state.showMembers=false;">✕</button>
+      </div>
+      <div class="members-panel-list" id="members-panel-list"></div>
+    </div>
   </main>
 </div>
 
-<!-- Context Menu -->
-<div class="ctx-menu hidden" id="ctx-menu">
-  <button class="ctx-item" id="ctx-react" type="button">😄 React</button>
-  <div class="ctx-sep"></div>
-  <button class="ctx-item ctx-danger" id="ctx-block" type="button">🚫 Block User</button>
-</div>
-
-<!-- Reaction Strip -->
-<div class="reaction-popup hidden" id="reaction-popup">
-  <div id="reaction-options"></div>
-</div>
-
-<!-- Block Confirm Modal -->
-<div class="modal-overlay hidden" id="block-modal">
+<!-- ROOM PASSWORD MODAL -->
+<div class="modal-overlay hidden" id="pw-prompt-modal">
   <div class="modal">
-    <div class="modal-icon">🚫</div>
-    <div class="modal-title">Block <span id="block-target-name"></span>?</div>
-    <div class="modal-body">You won't see their messages. They won't know they've been blocked.</div>
+    <div class="modal-icon" id="pw-prompt-icon">🔒</div>
+    <div class="modal-title">Room Password</div>
+    <div class="modal-body">Enter the password to join <strong id="pw-prompt-room-name"></strong></div>
+    <div class="field" style="margin-top:16px;text-align:left;">
+      <input type="password" id="room-password-input" placeholder="Room password…" autocomplete="off"/>
+    </div>
+    <div id="pw-prompt-error" class="auth-error hidden" style="margin-top:8px;text-align:left;"></div>
     <div class="modal-actions">
-      <button class="btn-ghost" id="block-cancel" type="button">Cancel</button>
-      <button class="btn-danger" id="block-confirm" type="button">Block User</button>
+      <button class="btn-ghost" id="pw-prompt-cancel" type="button">Cancel</button>
+      <button class="btn-primary" id="pw-prompt-submit" type="button" style="width:auto;margin-top:0;padding:10px 24px;"><span>Join Room</span></button>
     </div>
   </div>
 </div>
 
-<!-- Toast -->
+<!-- CONTEXT MENU -->
+<div class="ctx-menu hidden" id="ctx-menu">
+  <button class="ctx-item" id="ctx-react" type="button">😄 Add Reaction</button>
+  <div class="ctx-sep"></div>
+  <button class="ctx-item ctx-danger" id="ctx-block" type="button">🚫 Block User</button>
+</div>
+
+<!-- REACTION STRIP -->
+<div class="reaction-popup hidden" id="reaction-popup">
+  <div id="reaction-options"></div>
+</div>
+
+<!-- BLOCK CONFIRM MODAL -->
+<div class="modal-overlay hidden" id="block-modal">
+  <div class="modal">
+    <div class="modal-icon">🚫</div>
+    <div class="modal-title">Block <span id="block-target-name"></span>?</div>
+    <div class="modal-body">They won't be able to send you direct messages. They won't know they're blocked.</div>
+    <div class="modal-actions">
+      <button class="btn-ghost" id="block-cancel" type="button">Cancel</button>
+      <button class="btn-danger" id="block-confirm" type="button">Block</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
 <div class="toast" id="toast"></div>
 
 <script src="/socket.io/socket.io.js"></script>

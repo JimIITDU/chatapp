@@ -1,76 +1,69 @@
-/**
- * store.js — In-memory data store
- * Swap these Maps for a real DB (SQLite / Postgres / MongoDB) in production.
- */
 'use strict';
-
 const { v4: uuidv4 } = require('uuid');
+const bcrypt = require('bcryptjs');
 
-// ─── Accounts ────────────────────────────────────────────────
-// username (lowercase) -> { id, username, displayName, passwordHash,
-//                           createdAt, loginAttempts, lockedUntil, blocked:Set }
-const accounts = new Map();
+const accounts   = new Map();
+const onlineUsers= new Map();
+const dmHistory  = new Map(); // "userA:userB" -> msg[]
 
-// ─── Online Sessions ─────────────────────────────────────────
-// socketId -> { id, socketId, username, displayName, avatar, avatarColor, room, status }
-const onlineUsers = new Map();
+function dmKey(a, b) { return [a,b].sort().join(':'); }
+function getDmHistory(a,b) { return dmHistory.get(dmKey(a,b)) || []; }
+function pushDm(a,b,msg) {
+  const k = dmKey(a,b);
+  if (!dmHistory.has(k)) dmHistory.set(k,[]);
+  const arr = dmHistory.get(k);
+  arr.push(msg);
+  if (arr.length > 200) arr.shift();
+}
 
-// ─── Rooms ───────────────────────────────────────────────────
+const ROOM_PASSWORDS = { general:'general123', tech:'tech456', random:'random789', gaming:'gaming000' };
 const rooms = new Map([
-  ['general', { id: 'general', name: 'General',   icon: '💬', messages: [], description: 'Open conversation for everyone' }],
-  ['tech',    { id: 'tech',    name: 'Tech Talk',  icon: '💻', messages: [], description: 'All things technology' }],
-  ['random',  { id: 'random',  name: 'Random',     icon: '🎲', messages: [], description: 'Anything goes here' }],
-  ['gaming',  { id: 'gaming',  name: 'Gaming',     icon: '🎮', messages: [], description: 'Gamers welcome' }],
+  ['general',{id:'general',name:'General', icon:'💬',messages:[],description:'Open conversation for everyone',passwordHash:null}],
+  ['tech',   {id:'tech',   name:'Tech Talk',icon:'💻',messages:[],description:'All things technology',         passwordHash:null}],
+  ['random', {id:'random', name:'Random',  icon:'🎲',messages:[],description:'Anything goes here',            passwordHash:null}],
+  ['gaming', {id:'gaming', name:'Gaming',  icon:'🎮',messages:[],description:'Gamers welcome',               passwordHash:null}],
 ]);
 
-// ─── Helpers ─────────────────────────────────────────────────
-const AVATAR_COLORS = [
-  '#3B82F6','#8B5CF6','#EC4899','#10B981','#F59E0B',
-  '#EF4444','#06B6D4','#84CC16','#F97316','#6366F1'
-];
+async function initRoomPasswords() {
+  for (const [id,pw] of Object.entries(ROOM_PASSWORDS)) {
+    const r = rooms.get(id);
+    if (r) r.passwordHash = await bcrypt.hash(pw,10);
+  }
+  console.log('🔑 Room passwords hashed');
+}
+async function verifyRoomPassword(roomId,password) {
+  const r = rooms.get(roomId);
+  if (!r) return false;
+  if (!r.passwordHash) return true;
+  return bcrypt.compare(password, r.passwordHash);
+}
 
+const AVATAR_COLORS=['#3B82F6','#8B5CF6','#EC4899','#10B981','#F59E0B','#EF4444','#06B6D4','#84CC16','#F97316','#6366F1'];
 function avatarColor(username) {
-  let h = 0;
-  for (const c of username) h = ((h << 5) - h) + c.charCodeAt(0);
-  return AVATAR_COLORS[Math.abs(h) % AVATAR_COLORS.length];
+  let h=0;
+  for (const c of username) h=((h<<5)-h)+c.charCodeAt(0);
+  return AVATAR_COLORS[Math.abs(h)%AVATAR_COLORS.length];
 }
-
-function sanitize(s, max = 500) {
-  return (typeof s === 'string' ? s.trim() : '').slice(0, max);
-}
-
-function sysMsg(roomId, text) {
-  return { id: uuidv4(), type: 'system', text, roomId, timestamp: new Date().toISOString() };
-}
-
-/** Returns a snapshot of all rooms with current member counts */
+function sanitize(s,max=500) { return (typeof s==='string'?s.trim():'').slice(0,max); }
+function sysMsg(roomId,text) { return {id:uuidv4(),type:'system',text,roomId,timestamp:new Date().toISOString()}; }
 function buildRoomList() {
-  return [...rooms.values()].map(r => ({
-    id: r.id, name: r.name, icon: r.icon, description: r.description,
-    memberCount: [...onlineUsers.values()].filter(u => u.room === r.id).length
+  return [...rooms.values()].map(r=>({
+    id:r.id,name:r.name,icon:r.icon,description:r.description,
+    memberCount:[...onlineUsers.values()].filter(u=>u.room===r.id).length,
+    hasPassword:!!r.passwordHash,
   }));
 }
-
-/** Map of socketId->session for users currently in a room */
-function roomSessions(roomId) {
-  return new Map([...onlineUsers.entries()].filter(([, u]) => u.room === roomId));
+function roomSessions(roomId) { return new Map([...onlineUsers.entries()].filter(([,u])=>u.room===roomId)); }
+function roomUsers(roomId)    { return [...onlineUsers.values()].filter(u=>u.room===roomId); }
+function pushMessage(roomId,msg) {
+  const r=rooms.get(roomId); if(!r) return;
+  r.messages.push(msg); if(r.messages.length>500) r.messages.shift();
 }
-
-/** Array of sessions for users currently in a room */
-function roomUsers(roomId) {
-  return [...onlineUsers.values()].filter(u => u.room === roomId);
-}
-
-/** Push a message to a room, capped at 500 */
-function pushMessage(roomId, msg) {
-  const room = rooms.get(roomId);
-  if (!room) return;
-  room.messages.push(msg);
-  if (room.messages.length > 500) room.messages.shift();
-}
+function getSession(username) { return [...onlineUsers.values()].find(u=>u.username===username); }
 
 module.exports = {
-  accounts, onlineUsers, rooms,
-  avatarColor, sanitize, sysMsg,
-  buildRoomList, roomSessions, roomUsers, pushMessage,
+  accounts,onlineUsers,rooms,dmHistory,dmKey,getDmHistory,pushDm,
+  avatarColor,sanitize,sysMsg,
+  buildRoomList,roomSessions,roomUsers,pushMessage,
+  initRoomPasswords,verifyRoomPassword,getSession,
 };
